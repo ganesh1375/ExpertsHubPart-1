@@ -10,6 +10,11 @@ export class ForgotPasswordComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+  }
+  onClick(email){
+    console.log(email);
+    
   }
 
 }

@@ -45,6 +45,7 @@ export class RegisterComponent implements OnInit {
       confirmPassword: new FormControl('', [Validators.required]),
       phoneNo: new FormControl('')
     }, { validators: passwordValidators });
+
     $(document).ready(() => {
       //alert('I am Called From jQuery');
       // $(window).on("load", function () {
@@ -53,6 +54,8 @@ export class RegisterComponent implements OnInit {
     });
   }
   onSubmit() {
+    console.log("hghh");
+    
     this.emailFromUser = this.email.value;
     this.service.enroll(this.registerForm.value).subscribe(res => {
       //console.log(res.feedBack);

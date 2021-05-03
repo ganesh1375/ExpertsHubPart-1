@@ -37,10 +37,10 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password')
   }
 
-  async signIn(loginForm: any) {
+  async signIn() {
     // let email = this.email.value;
     // email = email.toString()
-    //console.log(loginForm.value);
+    console.log(this.loginForm.value);
     await this.service.loginUser(this.loginForm.value).subscribe(res => {
       if (res != null) {
         this.invalidEmail = false;

@@ -8,7 +8,7 @@
             </div>
 
             <div class="col-md-6  order-sm-2 formBox">
-                <form [formGroup]="registerForm" class="px-md-5" (ngSubmit)="onSubmit()">
+                <form [formGroup]="registerForm" class="px-md-5"  novalidate [class.d-none]="submitted || existEmail" (ngSubmit)="onSubmit()">
                     <h1 class="multicolortext title my-2 text-center form-check-label">Sign Up</h1>
 
                     <div class="media1">
@@ -42,6 +42,7 @@
                         </div>
                     </div>
                     </div>
+
                     <div class="media1">
 
                         <div class="form-group">
@@ -69,6 +70,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group media1">
                         <div class="col-12 pl-0">
                         <label>Phone number</label>
@@ -77,13 +79,14 @@
                         </div>
                     </div>
                     <br>
+                    
                     <div class="text-right ">
                         <a [routerLink]="['/login']">I am already member</a>
                     </div>
                     <br>
                     <div class="align-items-center form-group">
                         <button type="submit" class="btn btn-color text-white form-submit col-md-12"
-                            [disabled]="register.invalid">Register</button>
+                            >Register</button>
                     </div>
                 </form>
 
