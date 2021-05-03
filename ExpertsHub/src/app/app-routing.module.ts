@@ -17,7 +17,7 @@ const routes: Routes = [
     path:"register/login",component:LoginComponent
   },
   {
-    path:"fogot-password",component:ForgotPasswordComponent
+    path:"forgot-password",component:ForgotPasswordComponent
   },
   {
     path:"",component:HomepageComponent
