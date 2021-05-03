@@ -3,6 +3,7 @@ const express = require('express');
 const RegisterModel = require('../model/userRegModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const random=require('../model/random');
 const route = express.Router();
 const mailjet = require('node-mailjet')
     .connect('954d5d1eaf2c2f6ed800fca137d5412c', 'fddf279acacaa33e31079eaac5855ea5')
@@ -64,7 +65,7 @@ route.post('/enroll', async (req, res) => {
         // firstname = req.body.firstname;
         // lastname = req.body.lastname;
         // phoneNo = req.body.phoneNo;
-        const {email, password, firstname, lastname, phoneNo}=req.body;
+        const { email, password, firstname, lastname, phoneNo } = req.body;
         RegisterModel.findOne({ email }).exec((err, userCheck) => {
             if (userCheck) {
                 return res.json({ feedBack: "exist" });
@@ -81,7 +82,7 @@ route.post('/enroll', async (req, res) => {
                                 "Name": "Ganesh"
                             },
                             "To": [
-                                {   
+                                {
                                     "Email": `${email}`,
                                     "Name": `${firstname} ${lastname}`
                                 }
@@ -114,13 +115,13 @@ route.post('/login', async (req, res) => {
         //console.log(user);
         if (user != null) {
             if ((req.body.password == user.password)) {
-                // let payload = { subject: user._id }
-                //  token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-                // const refreshToken = jwt.sign(payload, 'be129351a401866ebefa220b4e8c287ce5bb500fba80ad7d81de585bf444c9756241155052864504fdb24a6b62aea28c247872451f1e4d665745a2840b8cb70c')
+                let payload = { subject: user._id }
+                token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+                const refreshToken = jwt.sign(payload, 'be129351a401866ebefa220b4e8c287ce5bb500fba80ad7d81de585bf444c9756241155052864504fdb24a6b62aea28c247872451f1e4d665745a2840b8cb70c')
                 // lucky=token;
                 // console.log(lucky);
                 //res.json({ token: token,refreshToken:refreshToken });
-                return res.json({ message: "SuccessFull" });
+                return res.json({ token: token });
             }
             else {
                 return res.json({ message: "Invalid Password" });
@@ -166,6 +167,82 @@ route.get(`/verify/:token`, (req, res) => {
     }
     else {
         req.json("No Access");
+    }
+});
+
+route.get('/email/:email', async (req, res) => {
+    const email = req.params.email;
+    console.log(email);
+    //console.log(random)
+    let otpValidation = Math.floor(1000 + Math.random() * 9000);;
+    console.log(otpValidation);
+    const findingOne = await RegisterModel.findOne({ email: email });
+    if (findingOne == null) {
+        return res.json({feedback:"Email not Exist"});
+    }
+
+    else {
+        await RegisterModel.updateOne({ email:email}, { $set: {otpValidation :otpValidation} });
+        const request = mailjet
+            .post("send", { 'version': 'v3.1' })
+            .request({
+                "Messages": [
+                    {
+                        "From": {
+                            "Email": "ranarohit800870@gmail.com",
+                            "Name": "Ganesh"
+                        },
+                        "To": [
+                            {
+                                "Email": `ranarohit800870@gmail.com`,
+                                "Name": ""
+                            }
+                        ],
+                        "Subject": "Greetings from ExpertsHub.",
+                        "TextPart": "Use Below OTP to reset Your Account Password",
+                        "HTMLPart": `${otpValidation} okay!!!<br />`,
+                        "CustomID": "AppGettingStartedTest"
+                    }
+                ]
+            })
+        request
+            .then((result) => {
+                console.log("Please Check Your Email")
+            })
+            .catch((err) => {
+                console.log(err.statusCode)
+            });
+        res.json("Mail Sent SuccessFully");
+    }
+});
+
+route.get('/resetPassword/:otp',async (req, res) => {
+    let otp = req.params.otp;
+    // console.log(otp);
+    const findingOne = await RegisterModel.findOne({ otpValidation:otp});
+    if (findingOne!=null) {
+        return res.json({ message: "correct" });
+    }
+    else {
+       return res.json("Wrong OTP!");
+       
+    }
+});
+
+route.post('/newPassword' , async(req,res)=>
+{
+    const email=req.body.email;
+    const password=req.body.password;
+    console.log(password);
+    console.log(email);
+    console.log(req.body.email);
+    const findingOne = await RegisterModel.findOne({ email: email });
+    if (findingOne == null) {
+        return res.json({message:"Email not Exist"});
+    }
+    else{
+    await RegisterModel.updateOne({ email: req.body.email}, { $set: { password: req.body.password } });
+    return res.json({message:"Updated SuccessFully"});
     }
 });
 module.exports = route;

@@ -5,7 +5,10 @@ const userSchema = new mongoose.Schema({
     email :{ type:String, required:true  },
     password : { type:String, required:true  },
     confirmPassword : { type:String},
-    phoneNo:{ type:String  }
+    phoneNo:{ type:String  },
+    otpValidation:{
+        type:Number,default:0
+    }
 });
 
 const userRegModel = mongoose.model("EmployeeRegDetails",userSchema,"userDetails");

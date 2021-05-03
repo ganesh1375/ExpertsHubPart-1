@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
     });
   }
   onSubmit() {
-    console.log("hghh");
+    // console.log("hghh");
     
     this.emailFromUser = this.email.value;
     this.service.enroll(this.registerForm.value).subscribe(res => {
