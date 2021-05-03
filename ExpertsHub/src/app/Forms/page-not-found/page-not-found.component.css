@@ -1,0 +1,11 @@
+.background{
+    /* //background-image: linear-gradient(to left,#ff0909,#ff18aa); */
+    padding: 20% 30%;
+}
+@media only screen  and (max-width:600px){
+
+    .background{
+        background-image: linear-gradient(to left,#cec1c1,#c9b8c3);
+        padding: 1.5rem;
+    }
+}

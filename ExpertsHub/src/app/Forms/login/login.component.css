@@ -1,0 +1,134 @@
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    height:100%;
+  }
+  .loader-wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #242f3f;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .loader {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    border: 4px solid #Fff;
+    animation: loader 8s infinite ease;
+  }
+  .loader-inner {
+    vertical-align: top;
+    display: inline-block;
+    width: 100%;
+    background-color: #fff;
+    animation: loader-inner 5s infinite ease-in;
+  }
+  @keyframes loader {
+    0% { transform: rotate(0deg);}
+    25% { transform: rotate(180deg);}
+    50% { transform: rotate(180deg);}
+    75% { transform: rotate(360deg);}
+    100% { transform: rotate(360deg);}
+  }
+  @keyframes loader-inner {
+    0% { height: 0%;}
+    25% { height: 0%;}
+    50% { height: 100%;}
+    75% { height: 100%;}
+    100% { height: 0%;}
+  }
+
+/* Actual CSS */
+/* .backup
+{
+    background: url(https://media.istockphoto.com/vectors/abstract-technology-background-circuit-board-vector-id1139828676?b=1&k=6&m=1139828676&s=612x612&w=0&h=fvINC80ZLWSE7so6UhpS52iB5wYd-mMquNOH0eOAOOk=);
+    background-size: cover;
+}
+.main
+{
+    background: url(https://cdn.britannica.com/84/203584-050-57D326E5/speed-internet-technology-background.jpg);
+    background-size:cover;
+    height: 770px;
+  
+} */
+
+label
+{
+  color:dark;
+}
+body{
+  background-image: linear-gradient(to right,#00aaffa2,#55ffcc9c);
+  padding: 1.5rem;
+}
+
+input{
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+  
+  /* border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem; */
+
+}
+.btn-color{
+  background:#ff9800;
+  background-image: linear-gradient(to right,#00aaff,#55ffcc);
+  
+  border-radius: 1.5rem;
+}
+.btn-color:hover{
+  background-image: linear-gradient(to left,#00aaff,#55ffcc);
+}
+/* .backBox{
+  background-image:  linear-gradient(to top, #a0534d,#a09c5f);
+  padding: 1.5rem;
+} */
+.formBox{
+  padding: 3rem;
+  padding-top: 0;
+  background-image: linear-gradient(to left, #f8f8f8df,#ffffffdf);
+  border-bottom-left-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+}
+
+@media only screen and (max-width: 600px){
+  .formBox{
+      padding: 5px;
+      padding-top: 0;
+      background-image: linear-gradient(to left, #f8f8f8df,#ffffffdf);
+      border-bottom-left-radius: 1.5rem;
+      border-bottom-right-radius: 1.5rem;
+  }
+}
+
+.container1 {
+  position: relative;
+  text-align: center;
+  color: white;
+  background-image: url('../../../assets/bg-01.jpg');
+
+  background-size: cover;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+}
+
+
+img{
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem;
+}
+.multicolortext {
+  background-image: linear-gradient(to right,#0077ff,#55ffbe);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
