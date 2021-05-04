@@ -4,6 +4,7 @@ const RegisterModel = require('../model/userRegModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const random=require('../model/random');
+const path = require("path");
 const route = express.Router();
 const mailjet = require('node-mailjet')
     .connect('954d5d1eaf2c2f6ed800fca137d5412c', 'fddf279acacaa33e31079eaac5855ea5')
@@ -83,7 +84,7 @@ route.post('/enroll', async (req, res) => {
                             },
                             "To": [
                                 {
-                                    "Email": `${email}`,
+                                    "Email":"ranarohit800870@gmail.com",
                                     "Name": `${firstname} ${lastname}`
                                 }
                             ],
@@ -158,9 +159,10 @@ route.get(`/verify/:token`, (req, res) => {
                 neWuser.save((err, success) => {
                     if (err) {
                         console.log("Error While Sing up");
-                        return res.json({ message: "endko entto " });
+                        return res.json({ message: "Error" });
                     }
-                    res.json({ message: "Sign up Successfull" });
+                    res.sendFile(path.join(__dirname+'/index.html'));
+                    //res.json({ message: "Sign up Successfull" });
                 })
             })
         })
@@ -200,7 +202,7 @@ route.get('/email/:email', async (req, res) => {
                         ],
                         "Subject": "Greetings from ExpertsHub.",
                         "TextPart": "Use Below OTP to reset Your Account Password",
-                        "HTMLPart": `${otpValidation} okay!!!<br />`,
+                        "HTMLPart": `${otpValidation} Use This OTP to rest Your Password!<br />`,
                         "CustomID": "AppGettingStartedTest"
                     }
                 ]
