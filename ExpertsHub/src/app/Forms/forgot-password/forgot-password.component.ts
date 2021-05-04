@@ -88,7 +88,7 @@ export class ForgotPasswordComponent implements OnInit {
         }
         else
         {
-          console.log("Okkati set cheyyali");
+          console.log("Error");
         }
       })
   }
