@@ -10,7 +10,7 @@ export class DatabaseService {
   baseUrl: string = 'http://localhost:5500/api';
   _loginUrl:string="http://localhost:5500/api/login";
 
-
+  token:any;
   email:any;
   otp:any;
   finalPassword:any;
@@ -25,6 +25,14 @@ export class DatabaseService {
   setObj(obj)
   {
     this.finalPassword=obj;
+  }
+  setToken(token:any)
+  {
+    this.token=token;
+  }
+  getToken()
+  {
+    return this.token;
   }
   enroll(data) {
     //console.log(data);
@@ -55,5 +63,6 @@ export class DatabaseService {
     return this.http.post<any>(`http://localhost:5500/api/newPassword`,password)
   }
 
+  
 
 }

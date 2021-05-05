@@ -41,19 +41,19 @@ export class LoginComponent implements OnInit {
   async signIn() {
     // let email = this.email.value;
     // email = email.toString()
-    console.log(this.loginForm.value);
+    //console.log(this.loginForm.value);
     await this.service.loginUser(this.loginForm.value).subscribe(res => {
       if (res != null) {
         this.invalidEmail = false;
         if (res.message == "Invalid Password") {
-          console.log(res.message);
+          //console.log(res.message);
           this.invalidPassword = true;
         }
         else {
           //console.log("Thanks Namsthe");
           this.isLogin=true;
           this.route.navigate(['']);
-          console.log(res.token);
+          //console.log(res.token);
           localStorage.setItem('token',res.token);
           this.invalidPassword = false;
         }

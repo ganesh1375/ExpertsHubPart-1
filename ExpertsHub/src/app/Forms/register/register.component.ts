@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DatabaseService } from 'src/app/Service/database.service';
 import { passwordValidators } from '../Validators/password.validators';
 declare var $: any;
@@ -10,7 +11,7 @@ declare var $: any;
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private service: DatabaseService) { }
+  constructor(private service: DatabaseService,private route:Router) { }
   registerForm: FormGroup;
   isEmailExist: boolean = false;
   submitted = false;
@@ -43,7 +44,7 @@ export class RegisterComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl('', [Validators.required]),
-      phoneNo: new FormControl('')
+      phoneNo: new FormControl('',[Validators.required])
     }, { validators: passwordValidators });
 
     $(document).ready(() => {
@@ -63,16 +64,23 @@ export class RegisterComponent implements OnInit {
       {
         this.submitted =false;
         this.existEmail=true;
-        alert("Email Already Exist");
+        //alert("Email Already Exist");
       }
       else
       {
+        //console.log(res.token)
+        //this.route.navigate(['/verify',res.token])
+        
         this.submitted=true;
         this.existEmail=false;
       }
 
     });
     
+  }
+  onFocus()
+  {
+    this.existEmail=false;
   }
 
 }

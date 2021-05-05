@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EmailVerificationComponent } from './Forms/email-verification/email-verification.component';
 import { ForgotPasswordComponent } from './Forms/forgot-password/forgot-password.component';
 import { LoginComponent } from './Forms/login/login.component';
 import { PageNotFoundComponent } from './Forms/page-not-found/page-not-found.component';
@@ -9,6 +10,9 @@ import { HomepageComponent } from './homepage/homepage.component';
 const routes: Routes = [
   {
     path:"register",component:RegisterComponent
+  },
+  {
+    path:"verify/:id",component:EmailVerificationComponent
   }
   ,{
     path:"login",component:LoginComponent

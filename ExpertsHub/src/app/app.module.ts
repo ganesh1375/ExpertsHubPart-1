@@ -11,6 +11,7 @@ import { ForgotPasswordComponent } from './Forms/forgot-password/forgot-password
 import { PageNotFoundComponent } from './Forms/page-not-found/page-not-found.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { HttpClientModule } from '@angular/common/http';
+import { EmailVerificationComponent } from './Forms/email-verification/email-verification.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     RegisterComponent,
     ForgotPasswordComponent,
     PageNotFoundComponent,
-    HomepageComponent
+    HomepageComponent,
+    EmailVerificationComponent
   ],
   imports: [
     BrowserModule,

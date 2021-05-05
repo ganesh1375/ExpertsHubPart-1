@@ -1,0 +1,14 @@
+<div class="container text-center mt-5 border p-5 shadow">
+    <div class="row">
+        <div class="col-md-12">
+            <p>Click on Below To Verify Your Email</p>
+            <div class="alert alert-success" *ngIf="alertMessage">
+                <strong>Success!</strong> Email Verified Successfully
+              </div>
+              <div class="alert alert-warning" *ngIf="errorMessage">
+                <strong>Warning!</strong> Invalid Token / Token Expired Please Register Again
+              </div>     
+            <button class="btn btn-primary" (click)=" onClick()">Verify</button>
+        </div>
+    </div>
+</div>

@@ -7,17 +7,13 @@ const random=require('../model/random');
 const path = require("path");
 const route = express.Router();
 const mailjet = require('node-mailjet')
-    .connect('954d5d1eaf2c2f6ed800fca137d5412c', 'fddf279acacaa33e31079eaac5855ea5')
-//const request = mailjet
+    .connect('954d5d1eaf2c2f6ed800fca137d5412c', 'fddf279acacaa33e31079eaac5855ea5');
 var token;
 route.get('/enroll', async (req, res) => {
-
     try {
 
         const details = await RegisterModel.find({});
-
         res.json(details);
-
     }
     catch (err) {
         res.status(500).json({ err: err.message });
@@ -58,7 +54,7 @@ route.get('/enroll', async (req, res) => {
 route.post('/enroll', async (req, res) => {
 
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+       
         // console.log(hashedPassword);
         // //let user = new RegisterModel();
         // email = req.body.email;
@@ -80,17 +76,17 @@ route.post('/enroll', async (req, res) => {
                         {
                             "From": {
                                 "Email": "ranarohit800870@gmail.com",
-                                "Name": "Ganesh"
+                                "Name": "ExpertsHub "
                             },
                             "To": [
                                 {
-                                    "Email":"ranarohit800870@gmail.com",
+                                    "Email":`${email}`,
                                     "Name": `${firstname} ${lastname}`
                                 }
                             ],
                             "Subject": "Greetings from ExpertsHub.",
                             "TextPart": "Click on Below Link To Verify Your Account",
-                            "HTMLPart": `<h3>Dear Aspriant, welcome to <a href='http://localhost:5500/api/verify/${token}'>ExpertsHub</a>!</h3><br />May the delivery force be with you!`,
+                            "HTMLPart": `Click on Below Link To Verify Your Account<h3>Dear Aspriant, welcome to <a href='http://localhost:4200/verify/${token}'>ExpertsHub</a>!</h3><br /> Thanks From ExpertsHub Team!!`,
                             "CustomID": "AppGettingStartedTest"
                         }
                     ]
@@ -102,7 +98,7 @@ route.post('/enroll', async (req, res) => {
                 .catch((err) => {
                     console.log(err.statusCode)
                 });
-            res.json("Okay");
+            return res.json({token:token});
         });
     }
     catch (err) {
@@ -113,15 +109,11 @@ route.post('/enroll', async (req, res) => {
 route.post('/login', async (req, res) => {
     try {
         const user = await RegisterModel.findOne({ email: req.body.email });
-        //console.log(user);
         if (user != null) {
             if ((req.body.password == user.password)) {
                 let payload = { subject: user._id }
                 token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
                 const refreshToken = jwt.sign(payload, 'be129351a401866ebefa220b4e8c287ce5bb500fba80ad7d81de585bf444c9756241155052864504fdb24a6b62aea28c247872451f1e4d665745a2840b8cb70c')
-                // lucky=token;
-                // console.log(lucky);
-                //res.json({ token: token,refreshToken:refreshToken });
                 return res.json({ token: token });
             }
             else {
@@ -139,8 +131,9 @@ route.post('/login', async (req, res) => {
 
 });
 
-route.get(`/verify/:token`, (req, res) => {
+route.get(`/verify/:token`, async (req, res) => {
     //console.log(token);
+    //const hashedPassword = await bcrypt.hash(password, 10);
     const token = req.params.token;
     console.log("Uniq Key" + token);
     if (token) {
@@ -148,8 +141,9 @@ route.get(`/verify/:token`, (req, res) => {
             if (err) {
                 return res.status(400).json({ error: err });
             }
-            console.log(decodedToken);
             const { email, password, firstname, lastname, phoneNo } = decodedToken;
+            //const hashedPassword = await bcrypt.hash(password, 10);
+            //console.log(hashedPassword);
             console.log(email);
             RegisterModel.findOne({ email }).exec((err, user) => {
                 if (user) {
@@ -161,8 +155,8 @@ route.get(`/verify/:token`, (req, res) => {
                         console.log("Error While Sing up");
                         return res.json({ message: "Error" });
                     }
-                    res.sendFile(path.join(__dirname+'/index.html'));
-                    //res.json({ message: "Sign up Successfull" });
+                    //res.sendFile(path.join(__dirname+'/index.html'));
+                    res.json({ message: "Sign up Successfull" });
                 })
             })
         })
@@ -196,7 +190,7 @@ route.get('/email/:email', async (req, res) => {
                         },
                         "To": [
                             {
-                                "Email": `ranarohit800870@gmail.com`,
+                                "Email": `${email}`,
                                 "Name": ""
                             }
                         ],

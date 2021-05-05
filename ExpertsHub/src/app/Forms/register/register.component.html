@@ -1,16 +1,15 @@
 <body class="backBox ">
 
-    <div class="container mt-5">
+    <div class="container mt-5 p-5">
 
-        <div class="media1">
+        <div class="media1 p-5">
             <div class="col-md-6 col-12 order-sm-1 imageBox">
                 <img src="../../../assets/signUpImg.JPG" class="img-fluid" alt="">
             </div>
 
             <div class="col-md-6 col-12 order-sm-2 formBox">
-                <form [formGroup]="registerForm" class="px-md-5"  novalidate [class.d-none]="submitted || existEmail" (ngSubmit)="onSubmit()">
+                <form [formGroup]="registerForm" class="px-md-5"  novalidate [class.d-none]="submitted" (ngSubmit)="onSubmit()">
                     <h1 class="multicolortext title my-2 text-center form-check-label">Sign Up</h1>
-
                     <div class="media1">
                         <div class="form-group column">
                             <label class="form-label">First name <b class="text-danger">*</b></label>
@@ -34,8 +33,11 @@
                     <div class="form-group media1">
                     <div class="col pl-0">
                         <label class="form-label">Email <b class="text-danger">*</b></label>
-                        <input type="email" [class.is-invalid]="email.invalid&&email.touched" formControlName="email"
+                        <input type="email" (focus)="onFocus()" [class.is-invalid]="email.invalid&&email.touched" formControlName="email"
                             class="form-control" placeholder="Enter email">
+                            <div class="alert alert-warning" *ngIf="existEmail">
+                                <strong>Warning!</strong> Email already Exist
+                              </div>
                         <div class="text-danger" *ngIf="email.invalid&&email.touched">
                             <small *ngIf="email.errors.required">Email is required</small>
                             <small *ngIf="email.errors.email">Enter email correctly</small>
@@ -85,7 +87,7 @@
                     </div>
                     <br>
                     <div class="align-items-center form-group">
-                        <button type="submit" class="btn btn-color text-white form-submit col-md-12"
+                        <button type="submit"  class="btn btn-color text-white form-submit col-md-12"
                             >Register</button>
                     </div>
                 </form>
@@ -100,17 +102,21 @@
                     </div>
                 </div>
             
-                <div class="container" *ngIf="existEmail" >
+                <!-- <div class="container" *ngIf="existEmail" >
                     <div class="row">
                         <div class="col-12">
                             <h4 class="text-dark">This Mail is already Exist <br>Please Login <br> </h4>
                             <button routerLink="login" class="btn btn-success ml-4 mt-4">Login</button>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </div>
     </div>
+    <div class="loader-wrapper">
+        <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+
     <router-outlet></router-outlet>
 </body>
